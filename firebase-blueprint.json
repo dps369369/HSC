@@ -1,0 +1,98 @@
+{
+  "entities": {
+    "Subject": {
+      "title": "Subject",
+      "description": "An HSC academic subject with mark tracking and paper classification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 150 },
+        "nameBn": { "type": "string", "maxLength": 200 },
+        "code": { "type": "string", "maxLength": 20 },
+        "paper": { "type": "string", "maxLength": 20 },
+        "fullMarks": { "type": "number" },
+        "potentialMarks": { "type": "number" },
+        "order": { "type": "number" },
+        "practicalComponents": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "fullMarks", "potentialMarks"]
+    },
+    "Chapter": {
+      "title": "Chapter",
+      "description": "A chapter inside an HSC subject",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "subjectId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 200 },
+        "nameBn": { "type": "string", "maxLength": 250 },
+        "chapterNumber": { "type": "number" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["subjectId", "name"]
+    },
+    "Topic": {
+      "title": "Topic",
+      "description": "A syllabus topic inside a chapter with mastery, difficulty, and board importance",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "subjectId": { "type": "string", "maxLength": 128 },
+        "chapterId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 250 },
+        "nameBn": { "type": "string", "maxLength": 250 },
+        "author": { "type": "string", "maxLength": 200 },
+        "order": { "type": "number" },
+        "mastery": { "type": "string", "enum": ["MASTERED", "MASTERING", "WILL"] },
+        "difficulty": { "type": "string", "enum": ["EASY", "HARD", "CAN I?"] },
+        "boardImportance": { "type": "string", "enum": ["POPULAR", "COMMON", "RARE"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["subjectId", "chapterId", "name", "mastery", "difficulty", "boardImportance"]
+    },
+    "PotentialRecord": {
+      "title": "PotentialRecord",
+      "description": "Weekly potential mark historical assessment or carried-forward record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "subjectId": { "type": "string", "maxLength": 128 },
+        "subjectName": { "type": "string", "maxLength": 150 },
+        "subjectNameBn": { "type": "string", "maxLength": 200 },
+        "subjectCode": { "type": "string", "maxLength": 20 },
+        "paper": { "type": "string", "maxLength": 20 },
+        "weekId": { "type": "string", "maxLength": 32 },
+        "surveyDate": { "type": "string", "maxLength": 32 },
+        "potentialMarks": { "type": "number" },
+        "fullMarks": { "type": "number" },
+        "status": { "type": "string", "enum": ["SUBMITTED", "CARRIED_FORWARD"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["subjectId", "weekId", "surveyDate", "potentialMarks", "fullMarks", "status"]
+    }
+  },
+  "firestore": {
+    "/subjects/{subjectId}": {
+      "schema": { "$ref": "#/entities/Subject" },
+      "description": "Academic subjects in the HSC curriculum with potential marks"
+    },
+    "/chapters/{chapterId}": {
+      "schema": { "$ref": "#/entities/Chapter" },
+      "description": "Chapters organized by subject"
+    },
+    "/topics/{topicId}": {
+      "schema": { "$ref": "#/entities/Topic" },
+      "description": "Topics organized by chapter and subject with 3-property tracking"
+    },
+    "/potential_records/{recordId}": {
+      "schema": { "$ref": "#/entities/PotentialRecord" },
+      "description": "Weekly potential mark historical survey records and automatic carry-forwards"
+    }
+  }
+}

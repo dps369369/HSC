@@ -1,0 +1,142 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_-]+$');
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner() {
+      return isSignedIn() && (
+        request.auth.uid == '10EdAs7UMMeREEGh4p1ciyBKYqa2' ||
+        (
+          request.auth.token.email != null &&
+          request.auth.token.email.lower() == 'debpriosarkar59@gmail.com'
+        )
+      );
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Validation for Subject
+    function isValidSubject(data) {
+      return data.keys().hasAll(['name', 'fullMarks', 'potentialMarks']) &&
+        data.keys().hasOnly(['id', 'name', 'nameBn', 'code', 'paper', 'fullMarks', 'potentialMarks', 'order', 'practicalComponents', 'createdAt', 'updatedAt']) &&
+        (!('id' in data) || (data.id is string && isValidId(data.id))) &&
+        data.name is string && data.name.size() > 0 && data.name.size() <= 150 &&
+        (!('nameBn' in data) || (data.nameBn is string && data.nameBn.size() <= 200)) &&
+        (!('paper' in data) || (data.paper is string && data.paper.size() <= 20)) &&
+        (!('code' in data) || (data.code is string && data.code.size() <= 20)) &&
+        (!('practicalComponents' in data) || (data.practicalComponents is list && data.practicalComponents.size() <= 50)) &&
+        data.fullMarks is number && data.fullMarks >= 0 && data.fullMarks <= 1000 &&
+        data.potentialMarks is number && data.potentialMarks >= 0 && data.potentialMarks <= data.fullMarks &&
+        (!('order' in data) || data.order is number) &&
+        (!('createdAt' in data) || (data.createdAt is string && data.createdAt.size() <= 64)) &&
+        (!('updatedAt' in data) || (data.updatedAt is string && data.updatedAt.size() <= 64));
+    }
+
+    // Validation for Chapter
+    function isValidChapter(data) {
+      return data.keys().hasAll(['subjectId', 'name']) &&
+        data.keys().hasOnly(['id', 'subjectId', 'name', 'nameBn', 'chapterNumber', 'order', 'createdAt', 'updatedAt']) &&
+        (!('id' in data) || (data.id is string && isValidId(data.id))) &&
+        data.subjectId is string && isValidId(data.subjectId) &&
+        data.name is string && data.name.size() > 0 && data.name.size() <= 200 &&
+        (!('nameBn' in data) || (data.nameBn is string && data.nameBn.size() <= 250)) &&
+        (!('chapterNumber' in data) || data.chapterNumber is number) &&
+        (!('order' in data) || data.order is number) &&
+        (!('createdAt' in data) || (data.createdAt is string && data.createdAt.size() <= 64)) &&
+        (!('updatedAt' in data) || (data.updatedAt is string && data.updatedAt.size() <= 64));
+    }
+
+    // Validation for Topic
+    function isValidTopic(data) {
+      return data.keys().hasAll(['subjectId', 'chapterId', 'name', 'mastery', 'difficulty', 'boardImportance']) &&
+        data.keys().hasOnly(['id', 'subjectId', 'chapterId', 'name', 'nameBn', 'author', 'order', 'mastery', 'difficulty', 'boardImportance', 'createdAt', 'updatedAt']) &&
+        (!('id' in data) || (data.id is string && isValidId(data.id))) &&
+        data.subjectId is string && isValidId(data.subjectId) &&
+        data.chapterId is string && isValidId(data.chapterId) &&
+        data.name is string && data.name.size() > 0 && data.name.size() <= 250 &&
+        (!('nameBn' in data) || (data.nameBn is string && data.nameBn.size() <= 250)) &&
+        (!('author' in data) || (data.author is string && data.author.size() <= 200)) &&
+        (!('order' in data) || data.order is number) &&
+        data.mastery in ['MASTERED', 'MASTERING', 'WILL'] &&
+        data.difficulty in ['EASY', 'HARD', 'CAN I?'] &&
+        data.boardImportance in ['POPULAR', 'COMMON', 'RARE'] &&
+        (!('createdAt' in data) || (data.createdAt is string && data.createdAt.size() <= 64)) &&
+        (!('updatedAt' in data) || (data.updatedAt is string && data.updatedAt.size() <= 64));
+    }
+
+    // Validation for PotentialRecord
+    function isValidPotentialRecord(data) {
+      return data.keys().hasAll(['subjectId', 'weekId', 'surveyDate', 'potentialMarks', 'fullMarks', 'status']) &&
+        data.keys().hasOnly(['id', 'subjectId', 'subjectName', 'subjectNameBn', 'subjectCode', 'paper', 'weekId', 'surveyDate', 'potentialMarks', 'fullMarks', 'status', 'createdAt', 'updatedAt']) &&
+        (!('id' in data) || (data.id is string && isValidId(data.id))) &&
+        data.subjectId is string && isValidId(data.subjectId) &&
+        (!('subjectName' in data) || (data.subjectName is string && data.subjectName.size() <= 150)) &&
+        (!('subjectNameBn' in data) || (data.subjectNameBn is string && data.subjectNameBn.size() <= 200)) &&
+        (!('subjectCode' in data) || (data.subjectCode is string && data.subjectCode.size() <= 20)) &&
+        (!('paper' in data) || (data.paper is string && data.paper.size() <= 20)) &&
+        data.weekId is string && data.weekId.size() <= 32 &&
+        data.surveyDate is string && data.surveyDate.size() <= 32 &&
+        data.potentialMarks is number && data.potentialMarks >= 0 && data.potentialMarks <= data.fullMarks &&
+        data.fullMarks is number && data.fullMarks >= 0 && data.fullMarks <= 1000 &&
+        data.status in ['SUBMITTED', 'CARRIED_FORWARD'] &&
+        (!('createdAt' in data) || (data.createdAt is string && data.createdAt.size() <= 64)) &&
+        (!('updatedAt' in data) || (data.updatedAt is string && data.updatedAt.size() <= 64));
+    }
+
+    // SUBJECTS COLLECTION
+    match /subjects/{subjectId} {
+      allow get, list: if true;
+      allow create: if isOwner() && isValidId(subjectId) && isValidSubject(incoming());
+      allow update: if isOwner() && isValidId(subjectId) && isValidSubject(incoming());
+      allow delete: if isOwner() && isValidId(subjectId);
+    }
+
+    // CHAPTERS COLLECTION
+    match /chapters/{chapterId} {
+      allow get, list: if true;
+      allow create: if isOwner() && isValidId(chapterId) && isValidChapter(incoming());
+      allow update: if isOwner() && isValidId(chapterId) && isValidChapter(incoming());
+      allow delete: if isOwner() && isValidId(chapterId);
+    }
+
+    // TOPICS COLLECTION
+    match /topics/{topicId} {
+      allow get, list: if true;
+      allow create: if isOwner() && isValidId(topicId) && isValidTopic(incoming());
+      allow update: if isOwner() && isValidId(topicId) && isValidTopic(incoming());
+      allow delete: if isOwner() && isValidId(topicId);
+    }
+
+    // POTENTIAL RECORDS COLLECTION
+    match /potential_records/{recordId} {
+      allow get, list: if true;
+      allow create: if isOwner() && isValidId(recordId) && isValidPotentialRecord(incoming());
+      allow update: if isOwner() && isValidId(recordId) && isValidPotentialRecord(incoming());
+      allow delete: if isOwner() && isValidId(recordId);
+    }
+
+    // Health check test doc
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}

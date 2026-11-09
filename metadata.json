@@ -1,0 +1,6 @@
+{
+  "name": "HSC",
+  "description": "Personal academic tracking and management application for HSC syllabus, mastery, difficulty, board importance, and potential marks.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

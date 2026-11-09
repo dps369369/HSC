@@ -1,0 +1,538 @@
+export interface RawSyllabusTopic {
+  id: string;
+  name: string;
+  nameBn?: string | null;
+  author?: string | null;
+  tracking: {
+    mastery: 'MASTERED' | 'MASTERING' | 'WILL' | null;
+    difficulty: 'EASY' | 'HARD' | 'CAN I?' | null;
+    boardImportance: 'POPULAR' | 'COMMON' | 'RARE' | null;
+  };
+}
+
+export interface RawSyllabusChapter {
+  id: string;
+  number: number;
+  name: string;
+  nameBn?: string | null;
+  topics: RawSyllabusTopic[];
+}
+
+export interface RawSyllabusSubject {
+  id: string;
+  subjectCode: string;
+  name: string;
+  nameBn?: string | null;
+  paper?: 'FIRST' | 'SECOND' | null;
+  practicalComponents?: { id: string; name: string; nameBn?: string | null }[];
+  chapters: RawSyllabusChapter[];
+}
+
+export const HSC_PERMANENT_SUBJECTS: RawSyllabusSubject[] = [
+  {
+    id: "subject-001",
+    subjectCode: "174",
+    name: "Physics 1st Paper",
+    nameBn: "পদার্থবিজ্ঞান ১ম পত্র",
+    paper: "FIRST",
+    practicalComponents: [
+      { id: "subject-001-prac-01", name: "Determine surface tension using capillary rise.", nameBn: null },
+      { id: "subject-001-prac-02", name: "Measure wire rigidity modulus using Searle's apparatus.", nameBn: null },
+      { id: "subject-001-prac-03", name: "Verify simple pendulum laws and derive gravitational acceleration (g).", nameBn: null },
+      { id: "subject-001-prac-04", name: "Determine speed of sound using resonance air columns.", nameBn: null },
+      { id: "subject-001-prac-05", name: "Measure specific resistance using a Metre Bridge.", nameBn: null },
+      { id: "subject-001-prac-06", name: "Verify Ohm's law.", nameBn: null }
+    ],
+    chapters: [
+      { id: "subject-001-ch-01", number: 1, name: "Physical World and Measurement", nameBn: "ভৌতজগত ও পরিমাপ", topics: [] },
+      { id: "subject-001-ch-02", number: 2, name: "Vector", nameBn: "ভেক্টর", topics: [] },
+      { id: "subject-001-ch-03", number: 3, name: "Dynamics", nameBn: "গতিবিদ্যা", topics: [] },
+      { id: "subject-001-ch-04", number: 4, name: "Newtonian Mechanics", nameBn: "নিউটনীয় বলবিজ্ঞান", topics: [] },
+      { id: "subject-001-ch-05", number: 5, name: "Work, Energy and Power", nameBn: "কাজ, শক্তি ও ক্ষমতা", topics: [] },
+      { id: "subject-001-ch-06", number: 6, name: "Gravitation and Gravity", nameBn: "মহাকর্ষ ও অভিকর্ষ", topics: [] },
+      { id: "subject-001-ch-07", number: 7, name: "Structural Properties of Matter", nameBn: "পদার্থের সংগাঠনিক ধর্ম", topics: [] },
+      { id: "subject-001-ch-08", number: 8, name: "Periodic Motion", nameBn: "পর্যায়বৃত্ত গতি", topics: [] },
+      { id: "subject-001-ch-09", number: 9, name: "Wave", nameBn: "তরঙ্গ", topics: [] },
+      { id: "subject-001-ch-10", number: 10, name: "Ideal Gas and Kinetic Theory of Gases", nameBn: "আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব", topics: [] }
+    ]
+  },
+  {
+    id: "subject-002",
+    subjectCode: "175",
+    name: "Physics 2nd Paper",
+    nameBn: "পদার্থবিজ্ঞান ২য় পত্র",
+    paper: "SECOND",
+    practicalComponents: [],
+    chapters: [
+      { id: "subject-002-ch-01", number: 1, name: "Thermodynamics", nameBn: "তাপগতিবিদ্যা", topics: [] },
+      { id: "subject-002-ch-02", number: 2, name: "Static Electricity", nameBn: "স্থির তড়িৎ", topics: [] },
+      { id: "subject-002-ch-03", number: 3, name: "Current Electricity", nameBn: "চল তড়িৎ", topics: [] },
+      { id: "subject-002-ch-04", number: 4, name: "Magnetic Effect of Current and Magnetism", nameBn: "তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চৌম্বকত্ব", topics: [] },
+      { id: "subject-002-ch-05", number: 5, name: "Electromagnetic Induction and Alternating Current", nameBn: "তাড়িতচৌম্বক আবেশ ও পরিবর্তী প্রবাহ", topics: [] },
+      { id: "subject-002-ch-06", number: 6, name: "Geometrical Optics", nameBn: "জ্যামিতিক আলোকবিজ্ঞান", topics: [] },
+      { id: "subject-002-ch-07", number: 7, name: "Physical Optics", nameBn: "ভৌত আলোকবিজ্ঞান", topics: [] },
+      { id: "subject-002-ch-08", number: 8, name: "Introduction to Modern Physics", nameBn: "আধুনিক পদার্থবিজ্ঞানের সূচনা", topics: [] },
+      { id: "subject-002-ch-09", number: 9, name: "Atomic Model and Nuclear Physics", nameBn: "পরমাণুর মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান", topics: [] },
+      { id: "subject-002-ch-10", number: 10, name: "Semiconductor and Electronics", nameBn: "সেমিকন্ডাক্টর ও ইলেকট্রনিক্স", topics: [] },
+      { id: "subject-002-ch-11", number: 11, name: "Astronomy", nameBn: "জ্যোতির্বিজ্ঞান", topics: [] }
+    ]
+  },
+  {
+    id: "subject-003",
+    subjectCode: "176",
+    name: "Chemistry 1st Paper",
+    nameBn: "রসায়ন ১ম পত্র",
+    paper: "FIRST",
+    practicalComponents: [
+      { id: "subject-003-prac-01", name: "Acid-base titration.", nameBn: null },
+      { id: "subject-003-prac-02", name: "Standardize NaOH using primary-standard oxalic acid.", nameBn: null },
+      { id: "subject-003-prac-03", name: "Identify inorganic basic radicals: Cu²⁺, Fe²⁺, Fe³⁺, Al³⁺, Zn²⁺, Ca²⁺, Na⁺, NH₄⁺.", nameBn: null },
+      { id: "subject-003-prac-04", name: "Identify acid radicals: Cl⁻, SO₄²⁻, CO₃²⁻, NO₃⁻.", nameBn: null },
+      { id: "subject-003-prac-05", name: "Detect functional groups in organic compounds.", nameBn: null }
+    ],
+    chapters: [
+      { id: "subject-003-ch-01", number: 1, name: "Safe Laboratory Use", nameBn: "গবেষণাগারের নিরাপদ ব্যবহার", topics: [] },
+      { id: "subject-003-ch-02", number: 2, name: "Qualitative Chemistry", nameBn: "গুণগত রসায়ন", topics: [] },
+      { id: "subject-003-ch-03", number: 3, name: "Periodic Properties of Elements and Chemical Bonding", nameBn: "মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন", topics: [] },
+      { id: "subject-003-ch-04", number: 4, name: "Chemical Change", nameBn: "রাসায়নিক পরিবর্তন", topics: [] },
+      { id: "subject-003-ch-05", number: 5, name: "Working Chemistry", nameBn: "কর্মমুখী রসায়ন", topics: [] }
+    ]
+  },
+  {
+    id: "subject-004",
+    subjectCode: "177",
+    name: "Chemistry 2nd Paper",
+    nameBn: "রসায়ন ২য় পত্র",
+    paper: "SECOND",
+    practicalComponents: [],
+    chapters: [
+      { id: "subject-004-ch-01", number: 1, name: "Environmental Chemistry", nameBn: "পরিবেশগত রসায়ন", topics: [] },
+      { id: "subject-004-ch-02", number: 2, name: "Organic Chemistry", nameBn: "জৈব রসায়ন", topics: [] },
+      { id: "subject-004-ch-03", number: 3, name: "Quantitative Chemistry", nameBn: "পরিমাণগত রসায়ন", topics: [] },
+      { id: "subject-004-ch-04", number: 4, name: "Electrochemistry", nameBn: "তড়িৎ রসায়ন", topics: [] },
+      { id: "subject-004-ch-05", number: 5, name: "Economic Chemistry", nameBn: "অর্থনৈতিক রসায়ন", topics: [] }
+    ]
+  },
+  {
+    id: "subject-005",
+    subjectCode: "265",
+    name: "Higher Mathematics 1st Paper",
+    nameBn: "উচ্চতর গণিত ১ম পত্র",
+    paper: "FIRST",
+    practicalComponents: [
+      { id: "subject-005-prac-01", name: "Graphical tracing of polynomial and inverse trigonometric functions.", nameBn: null },
+      { id: "subject-005-prac-02", name: "Matrix inversion.", nameBn: null },
+      { id: "subject-005-prac-03", name: "Geometric curve plotting for conics.", nameBn: null },
+      { id: "subject-005-prac-04", name: "Graphical solution of Linear Programming Problems (LPP).", nameBn: null },
+      { id: "subject-005-prac-05", name: "Numerical integral estimation.", nameBn: null }
+    ],
+    chapters: [
+      { id: "subject-005-ch-01", number: 1, name: "Matrices and Determinants", nameBn: "ম্যাট্রিক্স ও নির্ণায়ক", topics: [] },
+      { id: "subject-005-ch-02", number: 2, name: "Vectors", nameBn: "ভেক্টর", topics: [] },
+      { id: "subject-005-ch-03", number: 3, name: "Straight Lines", nameBn: "সরলরেখা", topics: [] },
+      { id: "subject-005-ch-04", number: 4, name: "Circles", nameBn: "বৃত্ত", topics: [] },
+      { id: "subject-005-ch-05", number: 5, name: "Permutations and Combinations", nameBn: "বিন্যাস ও সমাবেশ", topics: [] },
+      { id: "subject-005-ch-06", number: 6, name: "Trigonometric Ratios", nameBn: "ত্রিকোণমিতিক অনুপাত", topics: [] },
+      { id: "subject-005-ch-07", number: 7, name: "Trigonometric Ratios of Associated Angles", nameBn: "সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত", topics: [] },
+      { id: "subject-005-ch-08", number: 8, name: "Functions and Graph of Functions", nameBn: "ফাংশন ও ফাংশনের লেখচিত্র", topics: [] },
+      { id: "subject-005-ch-09", number: 9, name: "Differentiation", nameBn: "অন্তরীকরণ", topics: [] },
+      { id: "subject-005-ch-10", number: 10, name: "Integration", nameBn: "যোগজীকরণ", topics: [] }
+    ]
+  },
+  {
+    id: "subject-006",
+    subjectCode: "266",
+    name: "Higher Mathematics 2nd Paper",
+    nameBn: "উচ্চতর গণিত ২য় পত্র",
+    paper: "SECOND",
+    practicalComponents: [],
+    chapters: [
+      { id: "subject-006-ch-01", number: 1, name: "Real Numbers and Inequalities", nameBn: "বাস্তব সংখ্যা ও অসমতা", topics: [] },
+      { id: "subject-006-ch-02", number: 2, name: "Linear Programming", nameBn: "রৈখিক প্রোগ্রামন", topics: [] },
+      { id: "subject-006-ch-03", number: 3, name: "Complex Numbers", nameBn: "জটিল সংখ্যা", topics: [] },
+      { id: "subject-006-ch-04", number: 4, name: "Polynomials and Polynomial Equations", nameBn: "বহুপদী ও বহুপদী সমীকরণ", topics: [] },
+      { id: "subject-006-ch-05", number: 5, name: "Binomial Expansion", nameBn: "দ্বিপদী বিস্তার", topics: [] },
+      { id: "subject-006-ch-06", number: 6, name: "Conics", nameBn: "কণিক", topics: [] },
+      { id: "subject-006-ch-07", number: 7, name: "Inverse Trigonometric Functions and Trigonometric Equations", nameBn: "বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ", topics: [] },
+      { id: "subject-006-ch-08", number: 8, name: "Statics", nameBn: "স্থিতিবিদ্যা", topics: [] },
+      { id: "subject-006-ch-09", number: 9, name: "Motion of Particles in a Plane", nameBn: "সমতলে বস্তুকণার গতি", topics: [] },
+      { id: "subject-006-ch-10", number: 10, name: "Measures of Dispersion and Probability", nameBn: "বিস্তার পরিমাপ ও সম্ভাবনা", topics: [] }
+    ]
+  },
+  {
+    id: "subject-007",
+    subjectCode: "178",
+    name: "Biology 1st Paper — Botany",
+    nameBn: "জীববিজ্ঞান ১ম পত্র — উদ্ভিদবিজ্ঞান",
+    paper: "FIRST",
+    practicalComponents: [
+      { id: "subject-007-prac-01", name: "Microscopic study of mitosis using onion root tips.", nameBn: null },
+      { id: "subject-007-prac-02", name: "Transverse sectioning of monocot and dicot stems.", nameBn: null },
+      { id: "subject-007-prac-03", name: "Experiments related to plant transpiration and respiration.", nameBn: null },
+      { id: "subject-007-prac-04", name: "Floral dissection of Poaceae and Solanaceae families.", nameBn: null }
+    ],
+    chapters: [
+      { id: "subject-007-ch-01", number: 1, name: "Cell and its Structure", nameBn: "কোষ ও এর গঠন", topics: [] },
+      { id: "subject-007-ch-02", number: 2, name: "Cell Division", nameBn: "কোষ বিভাজন", topics: [] },
+      { id: "subject-007-ch-03", number: 3, name: "Cell Chemistry", nameBn: "কোষ রসায়ন", topics: [] },
+      { id: "subject-007-ch-04", number: 4, name: "Microorganisms", nameBn: "অনুজীব", topics: [] },
+      { id: "subject-007-ch-05", number: 5, name: "Algae and Fungi", nameBn: "শৈবাল ও ছত্রাক", topics: [] },
+      { id: "subject-007-ch-06", number: 6, name: "Bryophyta and Pteridophyta", nameBn: "ব্রায়োফাইটা ও টেরিডোফাইটা", topics: [] },
+      { id: "subject-007-ch-07", number: 7, name: "Gymnosperms and Angiosperms", nameBn: "নগ্নবীজী ও আবৃতবীজী উদ্ভিদ", topics: [] },
+      { id: "subject-007-ch-08", number: 8, name: "Tissue and Tissue System", nameBn: "টিস্যু ও টিস্যুতন্ত্র", topics: [] },
+      { id: "subject-007-ch-09", number: 9, name: "Plant Physiology", nameBn: "উদ্ভিদ শারীরতত্ত্ব", topics: [] },
+      { id: "subject-007-ch-10", number: 10, name: "Plant Reproduction", nameBn: "উদ্ভিদ প্রজনন", topics: [] },
+      { id: "subject-007-ch-11", number: 11, name: "Biotechnology", nameBn: "জীবপ্রযুক্তি", topics: [] },
+      { id: "subject-007-ch-12", number: 12, name: "Environment, Distribution and Conservation of Organisms", nameBn: "জীবের পরিবেশ, বিস্তার ও সংরক্ষণ", topics: [] }
+    ]
+  },
+  {
+    id: "subject-008",
+    subjectCode: "179",
+    name: "Biology 2nd Paper — Zoology",
+    nameBn: "জীববিজ্ঞান ২য় পত্র — প্রাণিবিজ্ঞান",
+    paper: "SECOND",
+    practicalComponents: [
+      { id: "subject-008-prac-01", name: "Study mitosis using onion root-tip cells.", nameBn: null },
+      { id: "subject-008-prac-02", name: "Study transverse sections of monocot and dicot stems where relevant to the practical syllabus.", nameBn: null },
+      { id: "subject-008-prac-03", name: "Study specimens and anatomical systems using Labeo rohita (Rui fish) or grasshopper.", nameBn: null },
+      { id: "subject-008-prac-04", name: "Identify prescribed zoological specimens.", nameBn: null }
+    ],
+    chapters: [
+      { id: "subject-008-ch-01", number: 1, name: "Animal Diversity and Classification", nameBn: "প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস", topics: [] },
+      { id: "subject-008-ch-02", number: 2, name: "Animal Identification (Hydra, Grasshopper, Rui Fish)", nameBn: "প্রাণীর পরিচিতি: হাইড্রা, ঘাসফড়িং, রুই মাছ", topics: [] },
+      { id: "subject-008-ch-03", number: 3, name: "Human Physiology: Digestion and Absorption", nameBn: "মানব শারীরতত্ত্ব: পরিপাক ও শোষণ", topics: [] },
+      { id: "subject-008-ch-04", number: 4, name: "Human Physiology: Blood and Circulation", nameBn: "মানব শারীরতত্ত্ব: রক্ত ও সঞ্চালন", topics: [] },
+      { id: "subject-008-ch-05", number: 5, name: "Human Physiology: Breathing and Respiration", nameBn: "মানব শারীরতত্ত্ব: শ্বাসক্রিয়া ও শ্বসন", topics: [] },
+      { id: "subject-008-ch-06", number: 6, name: "Human Physiology: Excretion and Osmoregulation", nameBn: "মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন", topics: [] },
+      { id: "subject-008-ch-07", number: 7, name: "Human Physiology: Locomotion and Movement", nameBn: "মানব শারীরতত্ত্ব: অঙ্গচলন ও চলন", topics: [] },
+      { id: "subject-008-ch-08", number: 8, name: "Human Physiology: Coordination and Control", nameBn: "মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ", topics: [] },
+      { id: "subject-008-ch-09", number: 9, name: "Human Physiology: Human Reproduction", nameBn: "মানব শারীরতত্ত্ব: মানব প্রজনন", topics: [] },
+      { id: "subject-008-ch-10", number: 10, name: "Human Immunity", nameBn: "মানবদেহের প্রতিরক্ষা", topics: [] },
+      { id: "subject-008-ch-11", number: 11, name: "Genetics and Evolution", nameBn: "জিনতত্ত্ব ও বিবর্তন", topics: [] },
+      { id: "subject-008-ch-12", number: 12, name: "Animal Behavior", nameBn: "প্রাণীর আচরণ", topics: [] }
+    ]
+  },
+  {
+    id: "subject-009",
+    subjectCode: "275",
+    name: "ICT",
+    nameBn: "তথ্য ও যোগাযোগ প্রযুক্তি",
+    paper: null,
+    practicalComponents: [
+      { id: "subject-009-prac-01", name: "Create HTML pages with tables, forms, images and hyperlinks.", nameBn: null },
+      { id: "subject-009-prac-02", name: "Write C programs using loops, arrays and conditional statements.", nameBn: null },
+      { id: "subject-009-prac-03", name: "Create relational database tables and execute SQL SELECT, INSERT and UPDATE operations.", nameBn: null }
+    ],
+    chapters: [
+      { id: "subject-009-ch-01", number: 1, name: "Information and Communication Technology: World and Bangladesh Perspective", nameBn: "তথ্য ও যোগাযোগ প্রযুক্তি: বিশ্ব ও বাংলাদেশ প্রেক্ষিত", topics: [] },
+      { id: "subject-009-ch-02", number: 2, name: "Communication Systems and Networking", nameBn: "কমিউনিকেশন সিস্টেমস ও নেটওয়ার্কিং", topics: [] },
+      { id: "subject-009-ch-03", number: 3, name: "Number System and Digital Devices", nameBn: "সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস", topics: [] },
+      { id: "subject-009-ch-04", number: 4, name: "Introduction to Web Design and HTML", nameBn: "ওয়েব ডিজাইন পরিচিতি এবং এইচটিএমএল", topics: [] },
+      { id: "subject-009-ch-05", number: 5, name: "Programming Language", nameBn: "প্রোগ্রামিং ভাষা", topics: [] },
+      { id: "subject-009-ch-06", number: 6, name: "Database Management System", nameBn: "ডেটাবেজ ম্যানেজমেন্ট সিস্টেম", topics: [] }
+    ]
+  },
+  {
+    id: "subject-010",
+    subjectCode: "101",
+    name: "Bangla 1st Paper",
+    nameBn: "বাংলা ১ম পত্র",
+    paper: "FIRST",
+    practicalComponents: [],
+    chapters: [
+      {
+        id: "subject-010-ch-01",
+        number: 1,
+        name: "Prescribed Prose",
+        nameBn: "গদ্য",
+        topics: [
+          { id: "subject-010-ch-01-topic-01", name: "Oporochita", nameBn: "অপরিচিতা", author: "Rabindranath Tagore", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-01-topic-02", name: "Bilasi", nameBn: "বিলাসী", author: "Sarat Chandra Chattopadhyay", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-01-topic-03", name: "Amar Path", nameBn: "আমার পথ", author: "Kazi Nazrul Islam", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-01-topic-04", name: "Manab Kalyan", nameBn: "মানব কল্যাণ", author: "Abul Fazal", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-01-topic-05", name: "Masi-Pisi", nameBn: "মাসি-পিসি", author: "Manik Bandyopadhyay", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-01-topic-06", name: "Bayannor Dinguli", nameBn: "বায়ান্নর দিনগুলো", author: "Sheikh Mujibur Rahman", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-01-topic-07", name: "Raincoat", nameBn: "রেইনকোট", author: "Akhtaruzzaman Elias", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-01-topic-08", name: "Nuraldiner Katha Mone Pore Jay", nameBn: "নুরলদীনের কথা মনে পড়ে যায়", author: "Syed Shamsul Haq", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-01-topic-09", name: "Jouboner Gan", nameBn: "যৌবনের গান", author: "Kazi Nazrul Islam", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-01-topic-10", name: "Mohajagotik Curator", nameBn: "মহাজাগতিক কিউরেটর", author: "Muhammad Zafar Iqbal", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-01-topic-11", name: "Banglar Nobyo Lekhokdiger Proti Nivedan", nameBn: "বাংলার নব্য লেখকদিগের প্রতি নিবেদন", author: "Bankimchandra Chattopadhyay", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-01-topic-12", name: "The Necklace", nameBn: "নেকলেস", author: "Guy de Maupassant", tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-010-ch-02",
+        number: 2,
+        name: "Prescribed Poetry",
+        nameBn: "কবিতা",
+        topics: [
+          { id: "subject-010-ch-02-topic-01", name: "Bibhishaner Proti Meghnad", nameBn: "বিভীষণের প্রতি মেঘনাদ", author: "Michael Madhusudan Dutt", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-02-topic-02", name: "Sonar Tori", nameBn: "সোনার তরী", author: "Rabindranath Tagore", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-02-topic-03", name: "Bidrohi", nameBn: "বিদ্রোহী", author: "Kazi Nazrul Islam", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-02-topic-04", name: "Protidan", nameBn: "প্রতিদান", author: "Jasimuddin", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-02-topic-05", name: "Suchetana", nameBn: "সুচেতনা", author: "Jibanananda Das", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-02-topic-06", name: "February 1969", nameBn: "ফেব্রুয়ারি ১৯৬৯", author: "Shamsur Rahman", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-02-topic-07", name: "Ami Kingbodontir Katha Bolchi", nameBn: "আমি কিংবদন্তির কথা বলছি", author: "Abu Zafar Obaidullah", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-02-topic-08", name: "Atharo Bachar Boyos", nameBn: "আঠারো বছর বয়স", author: "Sukanta Bhattacharya", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-02-topic-09", name: "Padma", nameBn: "পদ্মা", author: "Farrukh Ahmad", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-02-topic-10", name: "Tahariei Pore Mone", nameBn: "তাহారেই পড়ে মনে", author: "Sufia Kamal", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-02-topic-11", name: "Nuraldiner Katha Mone Pore Jay", nameBn: "নুরলদীনের কথা মনে পড়ে যায় (কবিতাংশ)", author: "Syed Shamsul Haq", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-02-topic-12", name: "Lok-Lokantor", nameBn: "লোক-লোকান্তর", author: "Al Mahmud", tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-010-ch-03",
+        number: 3,
+        name: "Co-textbooks",
+        nameBn: "সহপাঠ",
+        topics: [
+          { id: "subject-010-ch-03-topic-01", name: "Lalsalu", nameBn: "লালসালু", author: "Syed Waliullah", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-010-ch-03-topic-02", name: "Sirajuddaula", nameBn: "সিরাজউদ্দৌলা", author: "Sikandar Abu Zafar", tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      }
+    ]
+  },
+  {
+    id: "subject-011",
+    subjectCode: "102",
+    name: "Bangla 2nd Paper",
+    nameBn: "বাংলা ২য় পত্র",
+    paper: "SECOND",
+    practicalComponents: [],
+    chapters: [
+      {
+        id: "subject-011-ch-01",
+        number: 1,
+        name: "Applied Grammar",
+        nameBn: "প্রয়োগমূলক ব্যাকরণ",
+        topics: [
+          { id: "subject-011-ch-01-topic-01", name: "Bangla Pronunciation Rules", nameBn: "বাংলা উচ্চারণের নিয়ম", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-011-ch-01-topic-02", name: "Bangla Spelling Rules", nameBn: "বাংলা বানানের নিয়ম", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-011-ch-01-topic-03", name: "Grammatical Word Classes", nameBn: "বাংলা ভাষার ব্যাকরণিক শব্দশ্রেণি", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-011-ch-01-topic-04", name: "Word Formation: Prefixes and Compounds", nameBn: "উপসর্গ ও সমাস", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-011-ch-01-topic-05", name: "Sentence Theory and Transformation", nameBn: "বাক্য তত্ত্ব ও বাক্য রূপান্তর", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-011-ch-01-topic-06", name: "Usage Errors and Corrections", nameBn: "বাংলা ভাষার অপপ্রয়োগ ও শুদ্ধ প্রয়োগ", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-011-ch-02",
+        number: 2,
+        name: "Composition",
+        nameBn: "রচনা",
+        topics: [
+          { id: "subject-011-ch-02-topic-01", name: "Technical Terminology / Translation", nameBn: "পারিভাষিক শব্দ / অনুবাদ", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-011-ch-02-topic-02", name: "Daily Journal / Official Report Writing", nameBn: "দিনলিপি লিখন / প্রতিবেদন রচনা", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-011-ch-02-topic-03", name: "Official Email / Formal Application", nameBn: "বৈদ্যুতিন চিঠি / আবেদনপত্র", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-011-ch-02-topic-04", name: "Summary Writing / Amplification of Ideas", nameBn: "সারাংশ / ভাবসম্প্রসারণ", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-011-ch-02-topic-05", name: "Dialogue Writing / Short Story Construction", nameBn: "সংলাপ / ক্ষুদে গল্প", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-011-ch-02-topic-06", name: "Formal Essay Writing", nameBn: "প্রবন্ধ রচনা", author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      }
+    ]
+  },
+  {
+    id: "subject-012",
+    subjectCode: "107",
+    name: "English 1st Paper",
+    nameBn: "ইংরেজি ১ম পত্র",
+    paper: "FIRST",
+    practicalComponents: [],
+    chapters: [
+      {
+        id: "subject-012-ch-01",
+        number: 1,
+        name: "Unit 1: Education and Life",
+        nameBn: "ইউনিট ১: শিক্ষা ও জীবন",
+        topics: [
+          { id: "subject-012-ch-01-topic-01", name: "The Parrot's Tale", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-01-topic-02", name: "Education and Technology", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-01-topic-03", name: "Children in School", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-01-topic-04", name: "Civic Engagement", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-02",
+        number: 2,
+        name: "Unit 2: Art and Craft",
+        nameBn: "ইউনিট ২: শিল্প ও কারুশিল্প",
+        topics: [
+          { id: "subject-012-ch-02-topic-01", name: "What is Beauty?", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-02-topic-02", name: "Folk Music", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-02-topic-03", name: "Art", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-02-topic-04", name: "Craft", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-03",
+        number: 3,
+        name: "Unit 3: Myths and Literature",
+        nameBn: "ইউনিট ৩: পৌরাণিক কাহিনী ও সাহিত্য",
+        topics: [
+          { id: "subject-012-ch-03-topic-01", name: "Myths of Bengal", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-03-topic-02", name: "Icarus", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-03-topic-03", name: "The Legend of Gazi", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-03-topic-04", name: "Khona", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-04",
+        number: 4,
+        name: "Unit 4: History",
+        nameBn: "ইউনিট ৪: ইতিহাস",
+        topics: [
+          { id: "subject-012-ch-04-topic-01", name: "July Uprising: A Transformative Movement", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-04-topic-02", name: "Transformative Speeches", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-04-topic-03", name: "Great Women", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-05",
+        number: 5,
+        name: "Unit 5: Human Rights",
+        nameBn: "ইউনিট ৫: মানবাধিকার",
+        topics: [
+          { id: "subject-012-ch-05-topic-01", name: "Are We Aware of These Rights?", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-05-topic-02", name: "Rights to Health and Education", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-05-topic-03", name: "Coal Miners", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-05-topic-04", name: "Frederick Douglass", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-06",
+        number: 6,
+        name: "Unit 6: Dreams",
+        nameBn: "ইউনিট ৬: স্বপ্ন",
+        topics: [
+          { id: "subject-012-ch-06-topic-01", name: "What is a Dream?", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-06-topic-02", name: "Dream in Literature", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-07",
+        number: 7,
+        name: "Unit 7: Youthful Achievers",
+        nameBn: "ইউনিট ৭: তরুণ অর্জনকারী",
+        topics: [
+          { id: "subject-012-ch-07-topic-01", name: "Brojen Das: On Conquering the English Channel", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-07-topic-02", name: "Scaling a Mountain Peak", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-07-topic-03", name: "The Unbeaten Girls", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-08",
+        number: 8,
+        name: "Unit 8: Relationships",
+        nameBn: "ইউনিট ৮: সম্পর্ক",
+        topics: [
+          { id: "subject-012-ch-08-topic-01", name: "Family Relationships", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-08-topic-02", name: "Warmth in Relationships", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-08-topic-03", name: "A Mother in Mannville", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-08-topic-04", name: "Love", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-09",
+        number: 9,
+        name: "Unit 9: Adolescence",
+        nameBn: "ইউনিট ৯: কৈশোর",
+        topics: [
+          { id: "subject-012-ch-09-topic-01", name: "Storm and Stress of Adolescence", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-09-topic-02", name: "Adolescence and Related Problems in Bangladesh", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-09-topic-03", name: "The Story of Shilpi", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-09-topic-04", name: "Say 'No' to Bullying", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-10",
+        number: 10,
+        name: "Unit 10: Lifestyle",
+        nameBn: "ইউনিট ১০: জীবনধারা",
+        topics: [
+          { id: "subject-012-ch-10-topic-01", name: "Manners Around the World", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-10-topic-02", name: "Etiquette Netiquette", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-10-topic-03", name: "Food and Culture", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-10-topic-04", name: "Fitness", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-10-topic-05", name: "Consumerism", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-11",
+        number: 11,
+        name: "Unit 11: Peace and Conflict",
+        nameBn: "ইউনিট ১১: শান্তি ও দ্বন্দ্ব",
+        topics: [
+          { id: "subject-012-ch-11-topic-01", name: "Situations of Conflict", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-11-topic-02", name: "The Old Man at the Bridge", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-11-topic-03", name: "Stories From Gaza", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-11-topic-04", name: "Peace in Literature", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-12",
+        number: 12,
+        name: "Unit 12: Environment and Nature",
+        nameBn: "ইউনিট ১২: পরিবেশ ও প্রকৃতি",
+        topics: [
+          { id: "subject-012-ch-12-topic-01", name: "Water Water Everywhere", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-12-topic-02", name: "The Greta Effect", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-12-topic-03", name: "Endangered Species", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-12-topic-04", name: "What is Environmental Justice?", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-012-ch-13",
+        number: 13,
+        name: "Reading for Pleasure",
+        nameBn: "আনন্দের জন্য পঠন",
+        topics: [
+          { id: "subject-012-ch-13-topic-01", name: "Sultana's Dream", nameBn: null, author: "Rokeya Sakhawat Hossain", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-13-topic-02", name: "Thank You, Ma'am", nameBn: null, author: "Langston Hughes", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-13-topic-03", name: "Toba Tek Singh", nameBn: null, author: "Saadat Hasan Manto", tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-012-ch-13-topic-04", name: "The Proposal", nameBn: null, author: "Anton Chekhov", tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      }
+    ]
+  },
+  {
+    id: "subject-013",
+    subjectCode: "108",
+    name: "English 2nd Paper",
+    nameBn: "ইংরেজি ২য় পত্র",
+    paper: "SECOND",
+    practicalComponents: [],
+    chapters: [
+      {
+        id: "subject-013-ch-01",
+        number: 1,
+        name: "Applied Grammar",
+        nameBn: "প্রয়োগমূলক ব্যাকরণ",
+        topics: [
+          { id: "subject-013-ch-01-topic-01", name: "Articles and Determiners", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-01-topic-02", name: "Prepositions", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-01-topic-03", name: "Special Words and Phrases", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-01-topic-04", name: "Completing Sentences", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-01-topic-05", name: "Right Forms of Verbs", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-01-topic-06", name: "Transformation of Sentences", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-01-topic-07", name: "Direct and Indirect Speech", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-01-topic-08", name: "Modifiers", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-01-topic-09", name: "Sentence Connectors and Transitions", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-01-topic-10", name: "Contextual Synonyms and Antonyms", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-01-topic-11", name: "Punctuation and Capitalization", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      },
+      {
+        id: "subject-013-ch-02",
+        number: 2,
+        name: "Composition Writing",
+        nameBn: "রচনামূলক লিখন",
+        topics: [
+          { id: "subject-013-ch-02-topic-01", name: "Formal Letter / Official Application / Notice Writing", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-02-topic-02", name: "Newspaper Report Writing", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-02-topic-03", name: "Paragraph Writing: Comparison / Cause and Effect", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } },
+          { id: "subject-013-ch-02-topic-04", name: "Paragraph Writing: Listing / Descriptive / Argumentative", nameBn: null, author: null, tracking: { mastery: null, difficulty: null, boardImportance: null } }
+        ]
+      }
+    ]
+  }
+];
